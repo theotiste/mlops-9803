@@ -23,7 +23,7 @@ jobs:
 
     - name: Install Dependencies
       run: |
-        pip install -r requirements.txt
+        pip install -r Requirements.txt
         pip install mlflow
 
     - name: Run MLflow Experiment
