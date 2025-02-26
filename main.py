@@ -3,7 +3,7 @@ import argparse
 
 def main(recherche_modele, optimisation_modele):
     import mlflow
-    mlflow.set_experiment("mlflow_experiment") 
+    mlflow.set_experiment("MLflow Experiment Automation") 
     with mlflow.start_run():
         # Enregistrement des paramètres
         mlflow.log_param("recherche_modele", recherche_modele)
