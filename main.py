@@ -53,43 +53,43 @@ def main(recherche_modele, optimisation_modele):
             from sklearn.metrics import accuracy_score
 
             def train_model():
-            # Charger les données
-            df = pd.read_csv("Loan_Data.csv")  
+                # Charger les données
+                df = pd.read_csv("Loan_Data.csv")  
 
-            # Préparer les features et la target
-            X = df.drop(columns=["default"])  # Remplace "Loan_Status" par la colonne cible
-            y = df["default"]
+                # Préparer les features et la target
+                X = df.drop(columns=["default"])  # Remplace "Loan_Status" par la colonne cible
+                y = df["default"]
 
-            # Séparer en train et test
-            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+                # Séparer en train et test
+                X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-            # Initialiser le modèle
-            model = RandomForestClassifier(n_estimators=100, random_state=42)
+                # Initialiser le modèle
+                model = RandomForestClassifier(n_estimators=100, random_state=42)
 
-            # Entraîner le modèle
-            model.fit(X_train, y_train)
+                # Entraîner le modèle
+                model.fit(X_train, y_train)
 
-            # Prédictions et évaluation
-            y_pred = model.predict(X_test)
-            accuracy = accuracy_score(y_test, y_pred)
+                # Prédictions et évaluation
+                y_pred = model.predict(X_test)
+                accuracy = accuracy_score(y_test, y_pred)
 
-            # Enregistrer les métriques dans MLflow
-            mlflow.log_metric("accuracy", accuracy)
+                # Enregistrer les métriques dans MLflow
+                mlflow.log_metric("accuracy", accuracy)
 
-            return model
+                return model
 
-           with mlflow.start_run():
-           # Entraînement du modèle
-           model = train_model()  # Assure-toi que cette fonction existe
+            with mlflow.start_run():
+                 # Entraînement du modèle
+                 model = train_model()  # Assure-toi que cette fonction existe
     
-           # Enregistrement du modèle dans MLflow
-           model_uri = mlflow.sklearn.log_model(model, "loan_model")
+                 # Enregistrement du modèle dans MLflow
+                 model_uri = mlflow.sklearn.log_model(model, "loan_model")
 
-           # Déclarer le modèle dans Model Registry
-           client = MlflowClient()
-           model_name = "Loan_Model"
+                 # Déclarer le modèle dans Model Registry
+                 client = MlflowClient()
+                 model_name = "Loan_Model"
     
-           mlflow.register_model(model_uri, model_name)
+                 mlflow.register_model(model_uri, model_name)
 
 
 if __name__ == "__main__":
